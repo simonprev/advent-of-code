@@ -46,3 +46,21 @@ defmodule Test do
     assert Day1.part1(~w(+2 -5 +10)) === 7
   end
 end
+
+input =
+  "input.txt"
+  |> File.stream!()
+  |> Stream.map(&String.trim_trailing/1)
+  |> Enum.to_list()
+
+IO.puts("Part I")
+
+input
+|> Day1.part1()
+|> IO.puts()
+
+IO.puts("\nPart II")
+
+input
+|> Day1.part2()
+|> IO.puts()
