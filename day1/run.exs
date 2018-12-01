@@ -1,6 +1,6 @@
 defmodule Day1 do
   def part1(list), do: Day1.Part1.process(list)
-  def part2(list), do: Day1.Part2.process(list, list, 0, [])
+  def part2(list), do: Day1.Part2.process(list, list, 0, MapSet.new())
 end
 
 defmodule Day1.Part1 do
@@ -13,9 +13,9 @@ end
 
 defmodule Day1.Part2 do
   def process(list, [number | t], acc, frequencies) do
-    if acc in frequencies,
+    if MapSet.member?(frequencies, acc),
       do: acc,
-      else: process(list, t, acc + String.to_integer(number), [acc | frequencies])
+      else: process(list, t, acc + String.to_integer(number), MapSet.put(frequencies, acc))
   end
 
   def process(list, _, acc, frequencies), do: process(list, list, acc, frequencies)
