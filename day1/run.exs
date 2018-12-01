@@ -26,24 +26,15 @@ ExUnit.start()
 defmodule Test do
   use ExUnit.Case
 
-  test "part2 - 1" do
-    assert Day1.part2(~w(+1 -1)) === 0
-  end
-
-  test "part2 - 2" do
-    assert Day1.part2(~w(+3 +3 +4 -2 -4)) === 10
-  end
-
-  test "part2 - 3" do
-    assert Day1.part2(~w(-6 +3 +8 +5 -6)) === 5
-  end
-
-  test "part2 - 4" do
-    assert Day1.part2(~w(+7 +7 -2 -7 -4)) === 14
-  end
-
-  test "part1 - 1" do
+  test "part1" do
     assert Day1.part1(~w(+2 -5 +10)) === 7
+  end
+
+  test "part2" do
+    assert Day1.part2(~w(+1 -1)) === 0
+    assert Day1.part2(~w(+3 +3 +4 -2 -4)) === 10
+    assert Day1.part2(~w(-6 +3 +8 +5 -6)) === 5
+    assert Day1.part2(~w(+7 +7 -2 -7 -4)) === 14
   end
 end
 
