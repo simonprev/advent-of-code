@@ -27,39 +27,28 @@ end
 defmodule Day2.Part2 do
   def process(list) do
     list
-    |> Enum.reduce(%{}, fn item, acc ->
-      results =
-        Enum.map(list, fn
-          ^item ->
-            {item, 0}
-
-          other_item ->
-            score =
-              item
-              |> String.split("")
-              |> Enum.filter(&(&1 !== ""))
-              |> Enum.with_index()
-              |> Enum.map(fn {letter, index} -> String.at(other_item, index) === letter end)
-              |> Enum.filter(&(&1 === true))
-              |> length()
-
-            {other_item, score}
-        end)
-        |> Enum.sort_by(&elem(&1, 1), &>=/2)
-        |> hd()
-
-      Map.put(acc, item, results)
-    end)
-    |> Enum.sort_by(fn {_key, {_other, score}} -> score end, &>=/2)
-    |> (fn [{match1, {match2, _}} | _] ->
-          match1
+    |> Enum.reduce_while(nil, fn item, _ ->
+      Enum.reduce_while(list, nil, fn other_item, _ ->
+        similar =
+          item
           |> String.split("")
           |> Enum.filter(&(&1 !== ""))
           |> Enum.with_index()
-          |> Enum.reject(fn {letter, index} -> String.at(match2, index) !== letter end)
+          |> Enum.reject(fn {letter, index} -> String.at(other_item, index) !== letter end)
           |> Enum.map(&elem(&1, 0))
           |> Enum.join("")
-        end).()
+
+        if String.length(item) - 1 !== String.length(similar) do
+          {:cont, nil}
+        else
+          {:halt, similar}
+        end
+      end)
+      |> case do
+        nil -> {:cont, nil}
+        similar -> {:halt, similar}
+      end
+    end)
   end
 end
 
